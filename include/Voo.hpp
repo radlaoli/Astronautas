@@ -21,5 +21,9 @@ public:
 
     Voo(int codigo);
     ~Voo();
+
+    void adicionarPassageiro(string cpf);
+    void removerPassageiro(string cpf);
+    void exibirVoo();
 };
 #endif
