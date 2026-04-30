@@ -10,11 +10,10 @@ public:
     int idade;
     bool estado, disponibilidade;
 
-    Astronauta();
+    Astronauta(string cpf, string nome, int idade);
     ~Astronauta();
 
-    void cadastrar(string cpf, int idade, string nome_completo);
-    void estadoAstronauta();
+    void exibirEstado(); // TODO: certificar que foram listados todos os métodos
 };
 
 #endif
