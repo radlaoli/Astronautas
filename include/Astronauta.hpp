@@ -13,7 +13,7 @@ public:
     Astronauta(string cpf, string nome, int idade);
     ~Astronauta();
 
-    void exibirEstado(); // TODO: certificar que foram listados todos os métodos
+    void exibirInfo(); // TODO: certificar que foram listados todos os métodos
 };
 
 #endif

@@ -26,8 +26,8 @@ void Astronauta::exibirInfo()
         cout << "Estado: Morto | ";
     }
 
-    if (disponibilidade)
-    { // disponivel
+    if (disponibilidade) // disponivel
+    {
         cout << "Disponibilidade: Disponivel" << endl;
     }
     else
