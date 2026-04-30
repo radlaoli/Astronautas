@@ -9,15 +9,17 @@ using std::vector;
 class Voo
 {
 public:
-    int codigo;
-    vector<string> CPFs_Astronautas;
-    enum estado
+    enum estadoVoo
     {
         planejado,
         emCurso,
         finalizadoSucesso,
         finalizadoExplosao
     };
+
+    int codigo;
+    vector<string> CPFs_Astronautas;
+    estadoVoo estado;
 
     Voo(int codigo);
     ~Voo();
