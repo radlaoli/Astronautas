@@ -91,6 +91,39 @@ void Agencia::addAstronautaEmVoo(string cpf, int codigo)
     cout << "Astronauta adicionado ao voo com sucesso!" << endl;
 }
 
+void Agencia::rmAstronautaDoVoo(string cpf, int codigo)
+{
+    int idAstronauta = buscarIndiceAstronauta(cpf);
+    int idVoo = buscarIndiceVoo(codigo);
+
+    if (idAstronauta == -1)
+    {
+        cout << "Erro, astronauta com CPF fornecido nao encontrado!" << endl;
+        return;
+    }
+    if (idVoo == -1)
+    {
+        cout << "Erro, voo com codigo fornecido nao encontrado!" << endl;
+        return;
+    }
+    if (voos[idVoo].estado != Voo::planejado)
+    {
+        cout << "Erro, seu voo nao esta planejado!" << endl;
+        return;
+    }
+
+    for (int i = 0; i < voos[idVoo].CPFs_Astronautas.size(); i++)
+    {
+        if (voos[idVoo].CPFs_Astronautas[i] == cpf)
+        {
+            voos[idVoo].CPFs_Astronautas.erase(voos[idVoo].CPFs_Astronautas.begin() + i);
+            cout << "Astronauta removido do voo com sucesso!" << endl;
+            return;
+        }
+    }
+    cout << "Erro, o astronauta nao estava escalado no voo" << endl;
+}
+
 void Agencia::finalizarVooSucesso(int codigo)
 {
     int idVoo = buscarIndiceVoo(codigo);
