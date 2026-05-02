@@ -9,6 +9,7 @@ public:
     string CPF, nome;
     int idade;
     bool estado, disponibilidade;
+    vector<int> historicoVoos; // TODO: sucetível a mudança se o prof rejeitar essa forma
 
     Astronauta(string cpf, string nome, int idade);
     ~Astronauta();
