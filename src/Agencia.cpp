@@ -3,72 +3,81 @@
 
 using namespace std;
 
-void Agencia::cadastrarAstronauta(string cpf, int idade, string nome)
+// funções auxiliares:
+int Agencia::buscarIndiceAstronauta(string cpf)
 {
-    for (int i = 0; i < astronautas.size(); i++)
+    for (int i = 0; i < (int)astronautas.size(); i++)
     {
         if (astronautas[i].CPF == cpf)
         {
-            cout << "Erro, CPF ja cadastrado!" << endl;
-            return;
+            return i;
         }
     }
-
-    Astronauta novoAstronauta(cpf, nome, idade);
-    astronautas.push_back(novoAstronauta);
-
-    cout << "O novo Astronauta foi cadastrado!" << endl;
+    return -1;
 }
 
-void Agencia::finalizarVooSucesso(int codigo)
+int Agencia::buscarIndiceVoo(int codigo)
 {
     for (int i = 0; i < (int)voos.size(); i++)
     {
         if (voos[i].codigo == codigo)
         {
-            if (voos[i].estado == Voo::emCurso)
-            {
-                voos[i].estado = Voo::finalizadoSucesso;
-
-                for (int j = 0; j < (int)voos[i].CPFs_Astronautas.size(); j++)
-                {
-                    string cpfBusca = voos[i].CPFs_Astronautas[j];
-
-                    for (int k = 0; k < (int)astronautas.size(); k++)
-                    {
-                        if (astronautas[k].CPF == cpfBusca)
-                        {
-                            astronautas[k].disponibilidade = true;
-                            break;
-                        }
-                    }
-                }
-                cout << "Voo finalizado com sucesso !" << endl;
-            }
-            else
-            {
-                cout << "Erro, penas voos em curso podem ser finalizados!" << endl;
-            }
-            return;
+            return i;
         }
     }
-    cout << "Nao existe voo cadastrado com o codigo fornecido!" << endl;
+    return -1;
+}
+
+void Agencia::cadastrarAstronauta(string cpf, int idade, string nome)
+{
+    if (buscarIndiceAstronauta(cpf) != -1)
+    {
+        cout << "Erro, CPF ja cadastrado!" << endl;
+        return;
+    }
+
+    Astronauta novoAstronauta(cpf, nome, idade);
+    astronautas.push_back(novoAstronauta);
+    cout << "Astronauta cadastrado com sucesso!" << endl;
 }
 
 void Agencia::cadastrarVoo(int codigo)
 {
-    for (int i = 0; i < voos.size(); i++)
+    if (buscarIndiceVoo(codigo) != -1)
     {
-        if (voos[i].codigo == codigo)
-        {
-            cout << "Erro, ja existe um voo com esse codigo!" << endl;
-            return;
-        }
+        cout << "Erro, ja existe um voo com esse codigo!" << endl;
     }
+
     Voo novoVoo(codigo);
     voos.push_back(novoVoo);
-
     cout << "O novo voo foi cadastrado!" << endl;
+}
+
+void Agencia::finalizarVooSucesso(int codigo)
+{
+    int idVoo = buscarIndiceVoo(codigo);
+
+    if (idVoo == -1)
+    {
+        cout << "Erro: Voo nao encontrado!" << endl;
+        return;
+    }
+    if (voos[idVoo].estado != Voo::emCurso)
+    {
+        cout << "Erro: Apenas voos em curso podem ser finalizados!" << endl;
+        return;
+    }
+
+    voos[idVoo].estado = Voo::finalizadoSucesso;
+    for (string cpf : voos[idVoo].CPFs_Astronautas)
+    {
+        int idAstronauta = buscarIndiceAstronauta(cpf);
+        if (idAstronauta != -1)
+        {
+            astronautas[idAstronauta].disponibilidade = true;
+        }
+    }
+    cout << "Voo " << codigo << " finalizado com sucesso!" << endl;
 }
 
 void Agencia::listarAstronautasMortos()
