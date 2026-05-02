@@ -53,18 +53,56 @@ void Agencia::cadastrarVoo(int codigo)
     cout << "O novo voo foi cadastrado!" << endl;
 }
 
+void Agencia::addAstronautaEmVoo(string cpf, int codigo)
+{
+    int idAstronauta = buscarIndiceAstronauta(cpf);
+    int idVoo = buscarIndiceVoo(codigo);
+
+    if (idAstronauta == -1)
+    {
+        cout << "Erro, astronauta com CPF fornecido nao encontrado!" << endl;
+        return;
+    }
+    if (idVoo == -1)
+    {
+        cout << "Erro, voo com codigo fornecido nao encontrado!" << endl;
+        return;
+    }
+    if (voos[idVoo].estado != Voo::planejado)
+    {
+        cout << "Erro, seu voo nao esta planejado!" << endl;
+        return;
+    }
+    if (astronautas[idAstronauta].estado == false)
+    {
+        cout << "Erro, o astronauta com o CPF fornecido esta morto" << endl;
+        return;
+    }
+    for (int i = 0; i < voos[idVoo].CPFs_Astronautas.size(); i++)
+    {
+        if (voos[idVoo].CPFs_Astronautas[i] == cpf)
+        {
+            cout << "Erro, o astronauta ja esta escalado para esse voo" << endl;
+            return;
+        }
+    }
+
+    voos[idVoo].CPFs_Astronautas.push_back(cpf);
+    cout << "Astronauta adicionado ao voo com sucesso!" << endl;
+}
+
 void Agencia::finalizarVooSucesso(int codigo)
 {
     int idVoo = buscarIndiceVoo(codigo);
 
     if (idVoo == -1)
     {
-        cout << "Erro: Voo nao encontrado!" << endl;
+        cout << "Erro, voo nao encontrado!" << endl;
         return;
     }
     if (voos[idVoo].estado != Voo::emCurso)
     {
-        cout << "Erro: Apenas voos em curso podem ser finalizados!" << endl;
+        cout << "Erro, apenas voos em curso podem ser finalizados!" << endl;
         return;
     }
 
