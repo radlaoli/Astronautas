@@ -32,25 +32,26 @@ void Agencia::cadastrarAstronauta(string cpf, int idade, string nome)
 {
     if (buscarIndiceAstronauta(cpf) != -1)
     {
-        cout << "Erro, CPF ja cadastrado!" << endl;
+        cout << "Erro, CPF " << cpf << " ja cadastrado!" << endl;
         return;
     }
 
     Astronauta novoAstronauta(cpf, nome, idade);
     astronautas.push_back(novoAstronauta);
-    cout << "Astronauta cadastrado com sucesso!" << endl;
+    cout << "Astronauta com o CPF " << cpf << " cadastrado com sucesso!" << endl;
 }
 
 void Agencia::cadastrarVoo(int codigo)
 {
     if (buscarIndiceVoo(codigo) != -1)
     {
-        cout << "Erro, ja existe um voo com esse codigo!" << endl;
+        cout << "Erro, ja existe um voo com O codigo " << codigo << " !" << endl;
+        return;
     }
 
     Voo novoVoo(codigo);
     voos.push_back(novoVoo);
-    cout << "O novo voo foi cadastrado!" << endl;
+    cout << "O novo voo com o codigo " << codigo << " foi cadastrado!" << endl;
 }
 
 void Agencia::addAstronautaEmVoo(string cpf, int codigo)
@@ -60,22 +61,22 @@ void Agencia::addAstronautaEmVoo(string cpf, int codigo)
 
     if (idAstronauta == -1)
     {
-        cout << "Erro, astronauta com CPF fornecido nao encontrado!" << endl;
+        cout << "Erro, astronauta com CPF " << cpf << " nao encontrado!" << endl;
         return;
     }
     if (idVoo == -1)
     {
-        cout << "Erro, voo com codigo fornecido nao encontrado!" << endl;
+        cout << "Erro, voo com codigo " << codigo << " nao encontrado!" << endl;
         return;
     }
     if (voos[idVoo].estado != Voo::planejado)
     {
-        cout << "Erro, seu voo nao esta planejado!" << endl;
+        cout << "Erro, o voo " << codigo << " nao esta planejado!" << endl;
         return;
     }
     if (astronautas[idAstronauta].estado == false)
     {
-        cout << "Erro, o astronauta com o CPF fornecido esta morto" << endl;
+        cout << "Erro, o astronauta com o CPF " << cpf << " esta morto" << endl;
         return;
     }
     for (int i = 0; i < voos[idVoo].CPFs_Astronautas.size(); i++)
@@ -98,12 +99,12 @@ void Agencia::rmAstronautaDoVoo(string cpf, int codigo)
 
     if (idAstronauta == -1)
     {
-        cout << "Erro, astronauta com CPF fornecido nao encontrado!" << endl;
+        cout << "Erro, astronauta com CPF " << cpf << " nao encontrado!" << endl;
         return;
     }
     if (idVoo == -1)
     {
-        cout << "Erro, voo com codigo fornecido nao encontrado!" << endl;
+        cout << "Erro, voo com codigo " << codigo << " nao encontrado!" << endl;
         return;
     }
     if (voos[idVoo].estado != Voo::planejado)
@@ -130,7 +131,7 @@ void Agencia::lancarVoo(int codigo)
 
     if (idVoo == -1)
     {
-        cout << "Erro, voo com o codigo fornecido nao encontrado!" << endl;
+        cout << "Erro, voo com o codigo " << codigo << " nao encontrado!" << endl;
         return;
     }
     if (voos[idVoo].estado != Voo::planejado)
@@ -151,7 +152,7 @@ void Agencia::lancarVoo(int codigo)
 
         if (astronautas[idAstronauta].estado == false || astronautas[idAstronauta].disponibilidade == false)
         {
-            cout << "Erro, o lancamento foi abortado pois o astronauta esta morto ou indisponivel!" << endl;
+            cout << "Erro, o lancamento foi abortado pois o astronauta de cpf " << astronautas[i].CPF << " esta morto ou indisponivel!" << endl;
             return;
         }
     }
@@ -227,6 +228,7 @@ void Agencia::finalizarVooSucesso(int codigo)
 
 void Agencia::listarVoos()
 {
+    cout << "Lista de voos" << endl;
     if (voos.size() <= 0)
     {
         cout << "Nao ha voos cadastrados" << endl;
@@ -241,7 +243,8 @@ void Agencia::listarVoos()
 
                 voos[i].exibirVoo();
 
-                cout << "Passageiros:" << endl;
+                cout << endl
+                     << "Passageiros:" << endl;
                 if (voos[i].CPFs_Astronautas.size() <= 0)
                 {
                     cout << "Nenhum astronauta escalado" << endl;
@@ -256,16 +259,17 @@ void Agencia::listarVoos()
 
                         cout << "  - CPF: " << cpfBusca << " | Nome: " << astronautas[idAstronauta].nome << endl;
                     }
+                    cout << endl;
                 }
-                cout << "------------" << endl;
+                cout << "----------------" << endl;
             }
         }
-        cout << "----------------------------------------------------" << endl;
     }
 }
 
 void Agencia::listarAstronautasMortos()
 {
+    cout << "Lista de astronautas mortos:" << endl;
     for (int i = 0; i < astronautas.size(); i++)
     {
         if (astronautas[i].estado == false)
@@ -277,6 +281,7 @@ void Agencia::listarAstronautasMortos()
             {
                 cout << astronautas[i].historicoVoos[j] << " | ";
             }
+            cout << endl;
         }
     }
 }

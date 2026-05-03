@@ -23,8 +23,8 @@ public:
     void listarVoos();
     void listarAstronautasMortos();
 
-    int Agencia::buscarIndiceAstronauta(string cpf);
-    int Agencia::buscarIndiceVoo(int codigo);
+    int buscarIndiceAstronauta(string cpf);
+    int buscarIndiceVoo(int codigo);
 };
 
 #endif
