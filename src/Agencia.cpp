@@ -108,7 +108,7 @@ void Agencia::rmAstronautaDoVoo(string cpf, int codigo)
     }
     if (voos[idVoo].estado != Voo::planejado)
     {
-        cout << "Erro, seu voo nao esta planejado!" << endl;
+        cout << "Erro, esse voo nao esta planejado!" << endl;
         return;
     }
 
@@ -122,6 +122,52 @@ void Agencia::rmAstronautaDoVoo(string cpf, int codigo)
         }
     }
     cout << "Erro, o astronauta nao estava escalado no voo" << endl;
+}
+
+void Agencia::lancarVoo(int codigo)
+{
+    int idVoo = buscarIndiceVoo(codigo);
+
+    if (idVoo == -1)
+    {
+        cout << "Erro, voo com o codigo fornecido nao encontrado!" << endl;
+        return;
+    }
+    if (voos[idVoo].estado != Voo::planejado)
+    {
+        cout << "Erro, esse voo nao esta planejado!" << endl;
+        return;
+    }
+    if (voos[idVoo].CPFs_Astronautas.size() <= 0)
+    {
+        cout << "Erro, nao pode lancar voos sem astronautas" << endl;
+        return;
+    }
+
+    for (int i = 0; i < voos[idVoo].CPFs_Astronautas.size(); i++)
+    {
+        string cpf = voos[idVoo].CPFs_Astronautas[i];
+        int idAstronauta = buscarIndiceAstronauta(cpf);
+
+        if (astronautas[idAstronauta].estado == false || astronautas[idAstronauta].disponibilidade == false)
+        {
+            cout << "Erro, o lancamento foi abortado pois o astronauta esta morto ou indisponivel!" << endl;
+            return;
+        }
+    }
+
+    voos[idVoo].estado = Voo::emCurso;
+
+    for (int i = 0; i < voos[idVoo].CPFs_Astronautas.size(); i++)
+    {
+        string cpf = voos[idVoo].CPFs_Astronautas[i];
+        int idAstronauta = buscarIndiceAstronauta(cpf);
+
+        astronautas[idAstronauta].disponibilidade = false;
+        astronautas[idAstronauta].historicoVoos.push_back(codigo);
+    }
+
+    cout << "Voo lançado com sucesso!" << endl;
 }
 
 void Agencia::finalizarVooSucesso(int codigo)
