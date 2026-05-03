@@ -24,8 +24,6 @@ public:
     Voo(int codigo);
     ~Voo();
 
-    void adicionarAstronauta(string cpf);
-    void removerAstronauta(string cpf);
     void exibirVoo();
 };
 #endif
