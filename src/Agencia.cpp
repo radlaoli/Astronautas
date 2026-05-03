@@ -6,7 +6,7 @@ using namespace std;
 // funções auxiliares:
 int Agencia::buscarIndiceAstronauta(string cpf)
 {
-    for (int i = 0; i < (int)astronautas.size(); i++)
+    for (int i = 0; i < astronautas.size(); i++)
     {
         if (astronautas[i].CPF == cpf)
         {
@@ -18,7 +18,7 @@ int Agencia::buscarIndiceAstronauta(string cpf)
 
 int Agencia::buscarIndiceVoo(int codigo)
 {
-    for (int i = 0; i < (int)voos.size(); i++)
+    for (int i = 0; i < voos.size(); i++)
     {
         if (voos[i].codigo == codigo)
         {
