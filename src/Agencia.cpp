@@ -225,6 +225,45 @@ void Agencia::finalizarVooSucesso(int codigo)
     cout << "Voo " << codigo << " finalizado com sucesso!" << endl;
 }
 
+void Agencia::listarVoos()
+{
+    if (voos.size() <= 0)
+    {
+        cout << "Nao ha voos cadastrados" << endl;
+    }
+
+    for (int estado = 0; estado < 4; estado++)
+    {
+        for (int i = 0; i < voos.size(); i++)
+        {
+            if (voos[i].estado == estado)
+            {
+
+                voos[i].exibirVoo();
+
+                cout << "Passageiros:" << endl;
+                if (voos[i].CPFs_Astronautas.size() <= 0)
+                {
+                    cout << "Nenhum astronauta escalado" << endl;
+                }
+                else
+                {
+                    for (int j = 0; j < voos[i].CPFs_Astronautas.size(); j++)
+                    {
+                        string cpfBusca = voos[i].CPFs_Astronautas[j];
+
+                        int idAstronauta = buscarIndiceAstronauta(cpfBusca);
+
+                        cout << "  - CPF: " << cpfBusca << " | Nome: " << astronautas[idAstronauta].nome << endl;
+                    }
+                }
+                cout << "------------" << endl;
+            }
+        }
+        cout << "----------------------------------------------------" << endl;
+    }
+}
+
 void Agencia::listarAstronautasMortos()
 {
     for (int i = 0; i < astronautas.size(); i++)
