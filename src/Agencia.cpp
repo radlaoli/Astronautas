@@ -170,6 +170,34 @@ void Agencia::lancarVoo(int codigo)
     cout << "Voo lançado com sucesso!" << endl;
 }
 
+void Agencia::explodirVoo(int codigo)
+{
+    int idVoo = buscarIndiceVoo(codigo);
+
+    if (idVoo == -1)
+    {
+        cout << "Erro, voo nao encontrado!" << endl;
+        return;
+    }
+    if (voos[idVoo].estado != Voo::emCurso)
+    {
+        cout << "Erro, apenas voos em curso podem ser explodidos!" << endl;
+        return;
+    }
+    voos[idVoo].estado = Voo::finalizadoExplosao;
+
+    for (int i = 0; i < voos[idVoo].CPFs_Astronautas.size(); i++)
+    {
+        string cpf = voos[idVoo].CPFs_Astronautas[i];
+        int idAstronauta = buscarIndiceAstronauta(cpf);
+
+        astronautas[idAstronauta].estado = false;
+        astronautas[idAstronauta].disponibilidade = false;
+    }
+
+    cout << "Voo finalizado com explosao !" << endl;
+}
+
 void Agencia::finalizarVooSucesso(int codigo)
 {
     int idVoo = buscarIndiceVoo(codigo);
