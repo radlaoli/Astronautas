@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Astronauta::Astronauta(string cpf, string nome, int idade)
+Astronauta::Astronauta(string &cpf, string &nome, int idade)
 {
     this->CPF = cpf;
     this->nome = nome;

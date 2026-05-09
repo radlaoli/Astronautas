@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int Agencia::buscarIndiceAstronauta(string cpf)
+int Agencia::buscarIndiceAstronauta(string &cpf)
 {
     for (int i = 0; i < (int)astronautas.size(); i++)
     {
@@ -27,7 +27,7 @@ int Agencia::buscarIndiceVoo(int codigo)
     return -1;
 }
 
-void Agencia::cadastrarAstronauta(string cpf, int idade, string nome)
+void Agencia::cadastrarAstronauta(string &cpf, int idade, string &nome)
 {
     if (buscarIndiceAstronauta(cpf) != -1)
     {
@@ -53,7 +53,7 @@ void Agencia::cadastrarVoo(int codigo)
     cout << "O novo voo com o codigo " << codigo << " foi cadastrado!" << endl;
 }
 
-void Agencia::addAstronautaEmVoo(string cpf, int codigo)
+void Agencia::addAstronautaEmVoo(string &cpf, int codigo)
 {
     int idAstronauta = buscarIndiceAstronauta(cpf);
     int idVoo = buscarIndiceVoo(codigo);
@@ -91,7 +91,7 @@ void Agencia::addAstronautaEmVoo(string cpf, int codigo)
     cout << "Astronauta de CPF " << cpf << " adicionado ao voo " << codigo << " com sucesso!" << endl;
 }
 
-void Agencia::rmAstronautaDoVoo(string cpf, int codigo)
+void Agencia::rmAstronautaDoVoo(string &cpf, int codigo)
 {
     int idAstronauta = buscarIndiceAstronauta(cpf);
     int idVoo = buscarIndiceVoo(codigo);
@@ -234,8 +234,13 @@ void Agencia::listarVoos()
         return;
     }
 
+    string nomesEstados[] = {"PLANEJADOS", "EM CURSO", "FINALIZADOS COM SUCESSO", "FINALIZADOS COM EXPLOSAO"};
+
     for (int estado = 0; estado < 4; estado++)
     {
+        cout << endl
+             << "--- " << nomesEstados[estado] << " ---" << endl;
+
         for (int i = 0; i < (int)voos.size(); i++)
         {
             if (voos[i].estado == estado)

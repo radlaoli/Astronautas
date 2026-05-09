@@ -11,12 +11,12 @@ public:
     string CPF, nome;
     int idade;
     bool estado, disponibilidade;
-    vector<int> historicoVoos; // TODO: sucetível a mudança se o prof rejeitar essa forma
+    vector<int> historicoVoos;
 
-    Astronauta(string cpf, string nome, int idade);
+    Astronauta(string &cpf, string &nome, int idade); // Passagem da string que é um tipo pesado por referencia
     ~Astronauta();
 
-    void exibirInfo(); // TODO: certificar que foram listados todos os métodos
+    void exibirInfo();
 };
 
 #endif
