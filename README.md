@@ -2,7 +2,7 @@
 
 Projeto da Unidade 1 da disciplina Linguagem de Programação 1 (IMD/UFRN)
 
-### Compiação
+### Compilação
 
     g++ src/*.cpp -I include -o bin/agencia
 
