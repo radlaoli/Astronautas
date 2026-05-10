@@ -278,7 +278,8 @@ void Agencia::listarAstronautasMortos()
         if (astronautas[i].estado == false)
         {
             encontrouMorto = true;
-            cout << "CPF: " << astronautas[i].CPF << " | Nome: " << astronautas[i].nome << endl;
+            cout << endl
+                 << "CPF: " << astronautas[i].CPF << " | Nome: " << astronautas[i].nome << endl;
             cout << "Historico de Voos: " << endl
                  << "| ";
             for (int j = 0; j < (int)astronautas[i].historicoVoos.size(); j++)
